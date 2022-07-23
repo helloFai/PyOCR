@@ -1,5 +1,5 @@
 from pydoc import ErrorDuringImport
-from PIL import Image, ImageGrab
+from PIL import ImageGrab
 import pytesseract
 import pyperclip
 from langdetect import detect
@@ -7,21 +7,9 @@ from langdetect import detect_langs
 # from langdetect import DetectorFactory
 # DetectorFactory.seed = 0
 
-im = ImageGrab.grabclipboard()
 langslib = ["chi_sim", "chi_tra", "eng", "ita", "jpn"]
 detectlib = ["zh-cn", "zh-tw", "en", "it", "ja"]
 
-# if isinstance(im, Image.Image):
-#     print("Image: size : %s, mode : %s" % (im.size, im.mode))
-#     im.save("./grab_clipboard.png")
-# elif im:
-#     for filename in im:    
-#         print("filename : %s" % filename)
-#         im = Image.open(filename)
-# else:
-#     print("clipboard is empty")
-
-    
 def ocr_core(img, langu):
     result = pytesseract.image_to_string(img, lang=langu)
     print(f"result: {result}")
@@ -37,6 +25,7 @@ def lang_detect(ocrresult):
         print("detection failed.")
 
 def main():
+    im = ImageGrab.grabclipboard()
     a = 0
     for a in range(0,5):
         try:
@@ -47,6 +36,9 @@ def main():
                 finalresult = str(ocrresult)
                 print(f"final result: {finalresult}")
                 pyperclip.copy(finalresult)
+            else:
+                finalresult = f"{langslib[a]} OCR failed"
+                print(finalresult)
         except:
             print(ErrorDuringImport)
 
