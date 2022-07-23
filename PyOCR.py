@@ -1,4 +1,4 @@
-
+from pydoc import ErrorDuringImport
 from PIL import Image, ImageGrab
 import pytesseract
 import pyperclip
@@ -21,8 +21,7 @@ def ocr_core(img, langu):
     text = pytesseract.image_to_string(img, lang=langu)
     return text
 
-    
-if __name__ == "__main__":
+def main():
     try:
         picknum = int(input("please select a language:1. 简中 2.繁中 3.English 4.italiano 5.日本語:  "))
         lang_picked = langslib[picknum-1]
@@ -30,6 +29,10 @@ if __name__ == "__main__":
         print(result)
         pyperclip.copy(result)
     except:
-        result = ocr_core(im, langslib[0])
-        print(result)
-        pyperclip.copy(result)
+        print(ErrorDuringImport)
+    
+if __name__ == "__main__":
+    flag = True
+    while flag:
+        main()
+        flag = input('Would you like to run the program again? [y/n]') == 'y'
