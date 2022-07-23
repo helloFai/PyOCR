@@ -1,4 +1,4 @@
-
+from pydoc import ErrorDuringImport
 from PIL import Image, ImageGrab
 import pytesseract
 import pyperclip
@@ -36,16 +36,22 @@ def lang_detect(ocrresult):
     except:
         print("detection failed.")
 
-
-if __name__ == "__main__":
+def main():
     a = 0
     for a in range(0,5):
-        # print(f"round {a+1}")
-        ocrresult = ocr_core(im, langslib[a])
-        detectedresult = lang_detect(ocrresult)
-        if detectedresult == detectlib[a]:
-            finalresult = str(ocrresult)
-            print(f"final result: {finalresult}")
-            pyperclip.copy(finalresult)
-        else:
-            pass
+        try:
+            # print(f"round {a+1}")
+            ocrresult = ocr_core(im, langslib[a])
+            detectedresult = lang_detect(ocrresult)
+            if detectedresult == detectlib[a]:
+                finalresult = str(ocrresult)
+                print(f"final result: {finalresult}")
+                pyperclip.copy(finalresult)
+        except:
+            print(ErrorDuringImport)
+
+if __name__ == "__main__":
+    flag = True
+    while flag:
+        main()
+        flag = input('Would you like to run the program again? [y/n]') == 'y'
